@@ -1,0 +1,22 @@
+[
+    {
+        "model": "levelupapi.event",
+        "pk": 1,
+        "fields": {
+            "name": "Settlers of Catan Kickoff",
+            "date": "2021-06-22 12:00:00",
+            "game": 1,
+            "host": 1
+        }
+    },
+    {
+        "model": "levelupapi.event",
+        "pk": 2,
+        "fields": {
+            "name": "Dungeons & Dragons First Adventure",
+            "date": "2021-05-20 5:00:00",
+            "game": 2,
+            "host": 1
+        }
+    }
+]
