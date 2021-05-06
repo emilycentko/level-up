@@ -9,7 +9,7 @@ from rest_framework import status
 from levelupapi.models import Game, GameType, Gamer
 
 
-class GameSet(ViewSet):
+class GameView(ViewSet):
     """Level up games"""
 
     def create(self, request):
@@ -127,7 +127,7 @@ class GameSet(ViewSet):
         # That URL will retrieve all tabletop games
         game_type = self.request.query_params.get('type', None)
         if game_type is not None:
-            games = games.filter(gametype__id=game_type)
+            games = games.filter(game_type__id=game_type)
 
         serializer = GameSerializer(
             games, many=True, context={'request': request})
