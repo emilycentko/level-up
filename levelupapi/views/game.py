@@ -9,7 +9,7 @@ from rest_framework import status
 from levelupapi.models import Game, GameType, Gamer
 
 
-class Games(ViewSet):
+class GameSet(ViewSet):
     """Level up games"""
 
     def create(self, request):
@@ -34,7 +34,7 @@ class Games(ViewSet):
         # whose `id` is what the client passed as the
         # `gameTypeId` in the body of the request.
         game_type = GameType.objects.get(pk=request.data["gameTypeId"])
-        game.game_type = gametype
+        game.game_type = game_type
 
         # Try to save the new game to the database, then
         # serialize the game instance as JSON, and send the
@@ -87,7 +87,7 @@ class Games(ViewSet):
         game.number_of_players = request.data["numberOfPlayers"]
 
         game_type = GameType.objects.get(pk=request.data["gameTypeId"])
-        game.game_type = gametype
+        game.game_type = game_type
         game.save()
 
         # 204 status code means everything worked but the
