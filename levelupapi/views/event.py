@@ -7,7 +7,7 @@ from rest_framework.decorators import action
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
-from levelupapi.models import Game, Event, Gamer
+from levelupapi.models import Game, Event, Gamer, GamerEvent
 from levelupapi.views.game import GameSerializer
 
 
@@ -104,9 +104,9 @@ class EventView(ViewSet):
             event.joined = None
 
             try:
-                EventGamers.objects.get(event=event, gamer=gamer)
+                GamerEvent.objects.get(event=event, gamer=gamer)
                 event.joined = True
-            except EventGamers.DoesNotExist:
+            except GamerEvent.DoesNotExist:
                 event.joined = False
 
         # Support filtering events by game
@@ -133,15 +133,15 @@ class EventView(ViewSet):
 
             try:
                 # Determine if the user is already signed up
-                registration = EventGamers.objects.get(
+                registration = GamerEvent.objects.get(
                     event=event, gamer=gamer)
                 return Response(
                     {'message': 'Gamer already signed up this event.'},
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY
                 )
-            except EventGamers.DoesNotExist:
+            except GamerEvent.DoesNotExist:
                 # The user is not signed up.
-                registration = EventGamers()
+                registration = GamerEvent()
                 registration.event = event
                 registration.gamer = gamer
                 registration.save()
@@ -165,12 +165,12 @@ class EventView(ViewSet):
 
             try:
                 # Try to delete the signup
-                registration = EventGamers.objects.get(
+                registration = GamerEvent.objects.get(
                     event=event, gamer=gamer)
                 registration.delete()
                 return Response(None, status=status.HTTP_204_NO_CONTENT)
 
-            except EventGamers.DoesNotExist:
+            except GamerEvent.DoesNotExist:
                 return Response(
                     {'message': 'Not currently registered for event.'},
                     status=status.HTTP_404_NOT_FOUND
