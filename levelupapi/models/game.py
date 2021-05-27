@@ -6,3 +6,4 @@ class Game(models.Model):
     difficulty = models.IntegerField()
     number_of_players = models.IntegerField()
     game_type = models.ForeignKey("GameType", on_delete=models.DO_NOTHING, null = True)
+    gamer = models.ForeignKey("Gamer", on_delete=models.DO_NOTHING, null = True, default=1)
